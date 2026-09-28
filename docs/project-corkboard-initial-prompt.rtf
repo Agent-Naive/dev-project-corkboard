@@ -1,0 +1,125 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 ## Prompt for Grok Build CLI\
+\
+```\
+/goal Build Project Corkboard: a local-only project dashboard I run from the terminal on this Mac mini.\
+\
+REPO / NAME\
+- Product name: Project Corkboard\
+- Directory / repo folder: dev-project-corkboard\
+- Create and work only inside that folder. Do not scatter files elsewhere.\
+\
+HOW TO WORK\
+- Use multiple agents in parallel whenever it will finish v1 faster. Split work across agents instead of doing everything serially.\
+- Sensible split examples (adjust if you have a better cut):\
+  - Agent A: repo scaffold, server, config schema, README, run/stop commands\
+  - Agent B: corkboard UI (HTML/CSS/JS), cards, colors, sample data, empty states\
+  - Agent C: filesystem scanner, git/manifest detection, ignore rules, scan review flow\
+- Keep a single coherent repo. Agents must not invent conflicting stacks, ports, or config formats. One owner for the contract (config shape + API/routes + file layout); others implement against it.\
+- Merge into one working app before calling v1 done. No half-integrated branches left behind.\
+- Prefer speed with a working board over perfect architecture theater.\
+\
+CONTEXT\
+I have too many open projects on this machine and on external drives. I lose track of what each one is. I need a glanceable localhost page: corkboard / post-it wall with one card per project and just enough info to remember it. v1 must include a SCAN feature: I give it a path on the internal disk or an external volume and it finds likely ongoing projects. After v1 I will add drag/drop, richer notes, open-in-editor, etc. You may add tasteful design and small features that help a solo local-first developer. Do not build a SaaS, auth, cloud sync, analytics, or a heavy framework app.\
+\
+PRODUCT (v1)\
+- Local webpage on localhost (pick a port, document it).\
+- Visual metaphor: corkboard with pushpins and cards/post-its. Card color settable from config (picker can wait).\
+- One card per project. Minimum fields:\
+  - name\
+  - one-line summary\
+  - status (active | paused | idea | shipped | archive \'97 refine if needed)\
+  - optional color, tags, disk path\
+  - last activity if cheap (folder mtime and/or last git commit)\
+- Empty / first-run state must explain how to scan and how to add a project.\
+- Desktop-first, readable in a laptop browser.\
+- Branding in the UI and README: \'93Project Corkboard\'94.\
+\
+SCAN FEATURE (required, not optional)\
+I must be able to point the app at a directory and have it discover possible projects.\
+\
+Input\
+- Path I provide: any folder on the Mac or a mounted external drive.\
+- Configurable default roots in config (e.g. ~/Projects plus a placeholder for /Volumes/Whatever).\
+- UI and/or CLI: \'93scan this path\'94 with depth limit.\
+\
+What counts as a project\
+Use evidence. A random folder is not a project.\
+Strong signal:\
+- Directory is a git working tree root (.git exists here, not only in a child like node_modules).\
+Supporting signals (increase confidence):\
+- README / README.md\
+- Manifests: package.json, pnpm-workspace.yaml, pyproject.toml, requirements.txt, Cargo.toml, go.mod, Gemfile, composer.json, mix.exs, CMakeLists.txt, Makefile, *.xcodeproj, *.xcworkspace, Package.swift, pubspec.yaml, etc.\
+- Source-ish layout (src/, app/, lib/, cmd/) without being a dependency dump\
+Git enrichment when .git exists (read-only):\
+- last commit date + subject (one line)\
+- current branch\
+- whether worktree is dirty (optional if cheap)\
+- remotes (optional)\
+Ranking:\
+- Prefer git roots with recent commits or a README as \'93likely ongoing\'94.\
+- Folders with only loose files and no git/manifest = ignore or mark low-confidence, do not auto-pin.\
+\
+Safety / performance\
+- Do not modify anything inside scanned trees. This app is read-only toward my projects.\
+- Do not recurse from / or ~ by default. Only the path I give (plus configured roots).\
+- Skip and do not descend: node_modules, .git, .venv, venv, __pycache__, dist, build, target, .next, .cache, Library, .Trash, system volumes, and similar junk. Make the skip list easy to edit.\
+- Max depth configurable (default something like 3\'964 under the given root).\
+- External drives: if the path is missing/unmounted, fail soft with a clear message. Don\'92t hang the UI. Time out slow stats.\
+- Don\'92t follow symlinks into loops.\
+- Cap results (e.g. first N hits) so a huge disk doesn\'92t freeze the page.\
+- Never treat dev-project-corkboard itself as a mysterious third-party project if it appears in a scan; it may show up as this app.\
+\
+Scan UX (v1)\
+- Trigger scan from the board (path field + button) and/or a CLI command documented in README.\
+- Show results as a review list: path, detected name, confidence, last git commit if any, \'93add to board\'94 / \'93ignore\'94.\
+- Adding saves into the app\'92s config (projects.json or yaml). Re-scan should not duplicate already-tracked paths.\
+- Demo mode: include a small sample tree OR sample config cards so the board looks alive without scanning my real disk first.\
+- Never invent what my real projects are about. One-liner may come from README title/first paragraph or last commit subject; otherwise use folder name + \'93scanned project\'94.\
+\
+DATA\
+- Source of truth: config file inside dev-project-corkboard that I can edit by hand.\
+- Scan writes candidates I accept into that config.\
+- Ship 4\'968 clearly marked SAMPLE cards so first paint isn\'92t empty.\
+- Document how to set scan roots, ignore rules, and replace samples.\
+\
+STACK\
+- Start from terminal with one documented command from inside dev-project-corkboard.\
+- HTML + CSS + vanilla JS for the UI.\
+- Tiny local server (Python preferred on macOS unless you have a leaner Node path). Fewest moving parts. No Docker required.\
+- No required cloud fonts/CDNs; must work offline once started.\
+- Minimal dependencies, versions pinned if any.\
+\
+UX / DESIGN\
+- Cork texture, pins, slight rotation, paper/post-it look, still readable.\
+- Status and last-activity visible at a glance.\
+- Card click expands path, git snippet, tags \'97 stay on the board.\
+- Header: \'93Project Corkboard\'94, count, scan control, simple status filter if cheap.\
+\
+ENGINEERING\
+- All project files live in dev-project-corkboard.\
+- Clean layout. README: what Project Corkboard is, how to run, stop, scan a path, add/ignore a project, change roots, ignore list, external drive notes.\
+- Filesystem errors are soft failures.\
+- Don\'92t touch my other repos except reading metadata.\
+\
+ACCEPTANCE (v1 done when)\
+- I can enter dev-project-corkboard, start the server from terminal, open localhost, and see Project Corkboard with sample cards.\
+- I can enter a path (or CLI scan) and see candidate projects based on git/manifests, not every subdirectory.\
+- I can add a candidate to the board; refresh persists it.\
+- Unmounted / bad path does not crash the server.\
+- Colors + statuses render.\
+- README is enough for future-me.\
+- Next /goal can add: persist pin positions, color picker, open in Finder/VS Code/Cursor, live git status, search.\
+\
+OUT OF SCOPE\
+- Auth, sync, Electron, full kanban, rewriting my other projects, scanning the entire home directory unbidden.\
+\
+PROCESS\
+Create the dev-project-corkboard directory. Spin parallel agents immediately after the shared contract (layout, config schema, port, scan API) is written. Scaffold a working board and the scanner in parallel, then wire scan \uc0\u8594  review \u8594  config \u8594  cards. When v1 meets acceptance, say so and list: run command, config path, scan command/UI, which work was parallelized, and the 3 best next features.\
+```}

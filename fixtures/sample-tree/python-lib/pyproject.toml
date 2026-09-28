@@ -1,0 +1,4 @@
+[project]
+name = "python-lib"
+version = "0.0.1"
+description = "Fixture library"

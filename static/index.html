@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Corkboard</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="wall">
+    <header class="masthead">
+      <div class="brand">
+        <span class="brand-pin" aria-hidden="true"></span>
+        <div>
+          <h1>Project Corkboard</h1>
+        </div>
+      </div>
+
+      <nav id="filters" class="filters" aria-label="Filter by status">
+        <button type="button" class="filter" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="filter" data-filter="active" aria-pressed="false">active</button>
+        <button type="button" class="filter" data-filter="paused" aria-pressed="false">paused</button>
+        <button type="button" class="filter" data-filter="idea" aria-pressed="false">idea</button>
+        <button type="button" class="filter" data-filter="shipped" aria-pressed="false">shipped</button>
+        <button type="button" class="filter" data-filter="archive" aria-pressed="false">archive</button>
+        <button type="button" class="filter filter-hot" data-filter="hot" aria-pressed="false">Hot!</button>
+      </nav>
+
+      <form id="scan-form" class="scan-form" autocomplete="off">
+        <label class="field path-field">
+          <span>Path</span>
+          <input
+            id="scan-path"
+            name="path"
+            type="text"
+            spellcheck="off"
+            autocapitalize="off"
+            autocorrect="off"
+            placeholder="Folder or glob — e.g. ~/dev-project*"
+          >
+        </label>
+        <label class="field depth-field">
+          <span>Depth</span>
+          <input id="scan-depth" name="max_depth" type="number" min="0" max="32" value="4" inputmode="numeric">
+        </label>
+        <button type="submit" id="scan-btn" class="scan-btn">Scan</button>
+      </form>
+
+      <div id="chips" class="chips" aria-label="Saved scan roots"></div>
+    </header>
+
+    <section id="review" class="review" hidden aria-live="polite"></section>
+    <main id="board" class="board" aria-label="Pinned projects">
+      <div class="board-message">
+        <h2>Tacking up the board…</h2>
+      </div>
+    </main>
+  </div>
+  <noscript>
+    <p class="noscript">Project Corkboard needs JavaScript to read the local board.</p>
+  </noscript>
+  <script src="/static/app.js"></script>
+</body>
+</html>

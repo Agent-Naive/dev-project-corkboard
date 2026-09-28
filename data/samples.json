@@ -1,0 +1,107 @@
+{
+  "note": "Frozen factory samples. Do not treat this as the live board — that is config.json. Restore with: python3 server.py --restore-samples",
+  "projects": [
+    {
+      "id": "sample-starlight",
+      "name": "Starlight Notes",
+      "summary": "A quiet local notebook that never leaves the machine.",
+      "status": "active",
+      "color": "#f5e6a3",
+      "tags": [],
+      "path": null,
+      "sample": true,
+      "hot": false,
+      "last_activity": "2026-08-18T14:22:00",
+      "git": {
+        "branch": "main",
+        "last_commit_at": "2026-08-18T14:22:00",
+        "last_commit_subject": "Remember the cork texture this time",
+        "dirty": false,
+        "remote": null
+      }
+    },
+    {
+      "id": "sample-harbor",
+      "name": "Harbor Radio",
+      "summary": "Weekend radio streamer — paused while the antenna is in a drawer.",
+      "status": "paused",
+      "color": "#b8e0c8",
+      "tags": [],
+      "path": null,
+      "sample": true,
+      "hot": false,
+      "last_activity": "2026-03-02T09:10:00",
+      "git": {
+        "branch": "wip/eq",
+        "last_commit_at": "2026-03-02T09:10:00",
+        "last_commit_subject": "Park the EQ work until next winter",
+        "dirty": true,
+        "remote": null
+      }
+    },
+    {
+      "id": "sample-lantern",
+      "name": "Lantern Maps",
+      "summary": "Half-drawn idea: walking maps that glow in the dark.",
+      "status": "idea",
+      "color": "#f5a574",
+      "tags": [],
+      "path": null,
+      "sample": true,
+      "hot": false,
+      "last_activity": "2026-01-11T20:00:00",
+      "git": null
+    },
+    {
+      "id": "sample-postcard",
+      "name": "Postcard Press",
+      "summary": "Shipped a tiny static site for a friend's gallery show.",
+      "status": "shipped",
+      "color": "#f4b6c8",
+      "tags": [],
+      "path": null,
+      "sample": true,
+      "hot": false,
+      "last_activity": "2025-11-04T16:40:00",
+      "git": {
+        "branch": "main",
+        "last_commit_at": "2025-11-04T16:40:00",
+        "last_commit_subject": "v1.0 — gallery is live",
+        "dirty": false,
+        "remote": "https://example.invalid/postcard-press.git"
+      }
+    },
+    {
+      "id": "sample-attic",
+      "name": "Attic Ledger",
+      "summary": "Old inventory script. Kept around in case the attic is real.",
+      "status": "archive",
+      "color": "#d9c8b4",
+      "tags": [],
+      "path": null,
+      "sample": true,
+      "hot": false,
+      "last_activity": "2024-06-20T11:00:00",
+      "git": {
+        "branch": "main",
+        "last_commit_at": "2024-06-20T11:00:00",
+        "last_commit_subject": "Freeze: last known-good CSV import",
+        "dirty": false,
+        "remote": null
+      }
+    },
+    {
+      "id": "sample-corkboard",
+      "name": "Project Corkboard",
+      "summary": "This app — a local corkboard for every other project on the machine.",
+      "status": "active",
+      "color": "#f5e6a3",
+      "tags": [],
+      "path": null,
+      "sample": true,
+      "hot": false,
+      "last_activity": "2026-08-30T21:00:00",
+      "git": null
+    }
+  ]
+}
